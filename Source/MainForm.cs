@@ -2797,6 +2797,7 @@ namespace eft_dma_radar
             if (!nc连接)
                 canvas.DrawText(nc连接 ? "按键初始化成功！" : "按键初始化失败！", centerX, 16, TextRadarStatus);
             canvas.DrawText("子弹速度:" + this.LocalPlayer.bullet_speed, ("子弹速度:" + this.LocalPlayer.bullet_speed).Length + 44, 16, TextRadarStatus);
+            canvas.DrawText("锁定部位:" + (锁腿1 ? "腿部" : "头部"), 62, 34, TextRadarStatus);
             //canvas.DrawText("武器:" + LocalPlayer.GearManager.ActiveWeapon.Item.Name, ("武器:" + LocalPlayer.GearManager.ActiveWeapon.Item.Name).Length / 2, 34, TextRadarStatus);
 
 
