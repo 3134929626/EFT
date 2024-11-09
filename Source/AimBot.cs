@@ -820,16 +820,16 @@ namespace eft_dma_radar
 
             //if (局_间隔时间 > TimeSpan.FromMilliseconds(10))
             //{
-                //printf("%lu\n", 局_间隔时间);
-                //局_上次时间 = 局_本次时间;
-                //局_上次坐标 = newPosition;
+            //printf("%lu\n", 局_间隔时间);
+            //局_上次时间 = 局_本次时间;
+            //局_上次坐标 = newPosition;
 
             //局_移动速度.X = 局_X差 / (float)局_间隔时间.TotalMilliseconds * 1000f;
             //局_移动速度.Y = 局_Y差 / (float)局_间隔时间.TotalMilliseconds * 1000f;
             //局_移动速度.Z = 局_Z差 / (float)局_间隔时间.TotalMilliseconds * 1000f;
 
             //[Class] -.GClass07A8 : MovementState ->[10C] vector3_0x10C : UnityEngine.Vector3
-                局_移动速度 = Memory.ReadValue<Vector3>(player.MovementContext + 0x10C); 
+            局_移动速度 = Memory.ReadValue<Vector3>(player.MovementContext + 0x10C);
             //}
 
 
@@ -837,10 +837,10 @@ namespace eft_dma_radar
             var speed = FormTrajectory(Vector3.Distance(localbone, newPosition), new Vector3(0, 0, 0), new Vector3(this.LocalPlayer.bullet_speed, 0, 0), this.LocalPlayer.bullet_mass, this.LocalPlayer.bullet_diam, this.LocalPlayer.ballistic_coeff, out GStruct267[] trajectoryInfo);
 
             float 局_子弹飞行 = speed + (Program.Config.GamePing / 2000.0f);//_config.BulletSpeed
-                                                                                                                                       //if (局_子弹飞行 < 0.08f)
-                                                                                                                                       //{
-                                                                                                                                       //    局_子弹飞行 = 0.08f;
-                                                                                                                                       //}
+                                                                       //if (局_子弹飞行 < 0.08f)
+                                                                       //{
+                                                                       //    局_子弹飞行 = 0.08f;
+                                                                       //}
             局_返回坐标.X = newPosition.X + 局_移动速度.X * 局_子弹飞行;
             局_返回坐标.Y = newPosition.Y + 局_移动速度.Y * 局_子弹飞行;
             局_返回坐标.Z = newPosition.Z + 局_移动速度.Z * 局_子弹飞行;
@@ -903,87 +903,87 @@ namespace eft_dma_radar
         //    return false;
         //}
         private static readonly List<Vector2> speedlist = new List<Vector2>
-	    {
-	    	new Vector2(0f, 0.2629f),
-	    	new Vector2(0.05f, 0.2558f),
-	    	new Vector2(0.1f, 0.2487f),
-	    	new Vector2(0.15f, 0.2413f),
-	    	new Vector2(0.2f, 0.2344f),
-	    	new Vector2(0.25f, 0.2278f),
-	    	new Vector2(0.3f, 0.2214f),
-	    	new Vector2(0.35f, 0.2155f),
-	    	new Vector2(0.4f, 0.2104f),
-	    	new Vector2(0.45f, 0.2061f),
-	    	new Vector2(0.5f, 0.2032f),
-	    	new Vector2(0.55f, 0.202f),
-	    	new Vector2(0.6f, 0.2034f),
-	    	new Vector2(0.7f, 0.2165f),
-	    	new Vector2(0.725f, 0.223f),
-	    	new Vector2(0.75f, 0.2313f),
-	    	new Vector2(0.775f, 0.2417f),
-	    	new Vector2(0.8f, 0.2546f),
-	    	new Vector2(0.825f, 0.2706f),
-	    	new Vector2(0.85f, 0.2901f),
-	    	new Vector2(0.875f, 0.3136f),
-	    	new Vector2(0.9f, 0.3415f),
-	    	new Vector2(0.925f, 0.3734f),
-	    	new Vector2(0.95f, 0.4084f),
-	    	new Vector2(0.975f, 0.4448f),
-	    	new Vector2(1f, 0.4805f),
-	    	new Vector2(1.025f, 0.5136f),
-	    	new Vector2(1.05f, 0.5427f),
-	    	new Vector2(1.075f, 0.5677f),
-	    	new Vector2(1.1f, 0.5883f),
-	    	new Vector2(1.125f, 0.6053f),
-	    	new Vector2(1.15f, 0.6191f),
-	    	new Vector2(1.2f, 0.6393f),
-	    	new Vector2(1.25f, 0.6518f),
-	    	new Vector2(1.3f, 0.6589f),
-	    	new Vector2(1.35f, 0.6621f),
-	    	new Vector2(1.4f, 0.6625f),
-	    	new Vector2(1.45f, 0.6607f),
-	    	new Vector2(1.5f, 0.6573f),
-	    	new Vector2(1.55f, 0.6528f),
-	    	new Vector2(1.6f, 0.6474f),
-	    	new Vector2(1.65f, 0.6413f),
-	    	new Vector2(1.7f, 0.6347f),
-	    	new Vector2(1.75f, 0.628f),
-	    	new Vector2(1.8f, 0.621f),
-	    	new Vector2(1.85f, 0.6141f),
-	    	new Vector2(1.9f, 0.6072f),
-	    	new Vector2(1.95f, 0.6003f),
-	    	new Vector2(2f, 0.5934f),
-	    	new Vector2(2.05f, 0.5867f),
-	    	new Vector2(2.1f, 0.5804f),
-	    	new Vector2(2.15f, 0.5743f),
-	    	new Vector2(2.2f, 0.5685f),
-	    	new Vector2(2.25f, 0.563f),
-	    	new Vector2(2.3f, 0.5577f),
-	    	new Vector2(2.35f, 0.5527f),
-	    	new Vector2(2.4f, 0.5481f),
-	    	new Vector2(2.45f, 0.5438f),
-	    	new Vector2(2.5f, 0.5397f),
-	    	new Vector2(2.6f, 0.5325f),
-	    	new Vector2(2.7f, 0.5264f),
-	    	new Vector2(2.8f, 0.5211f),
-	    	new Vector2(2.9f, 0.5168f),
-	    	new Vector2(3f, 0.5133f),
-	    	new Vector2(3.1f, 0.5105f),
-	    	new Vector2(3.2f, 0.5084f),
-	    	new Vector2(3.3f, 0.5067f),
-	    	new Vector2(3.4f, 0.5054f),
-	    	new Vector2(3.5f, 0.504f),
-	    	new Vector2(3.6f, 0.503f),
-	    	new Vector2(3.7f, 0.5022f),
-	    	new Vector2(3.8f, 0.5016f),
-	    	new Vector2(3.9f, 0.501f),
-	    	new Vector2(4f, 0.5006f),
-	    	new Vector2(4.2f, 0.4998f),
-	    	new Vector2(4.4f, 0.4995f),
-	    	new Vector2(4.6f, 0.4992f),
-	    	new Vector2(4.8f, 0.499f),
-	    	new Vector2(5f, 0.4988f)
-	    };
+        {
+            new Vector2(0f, 0.2629f),
+            new Vector2(0.05f, 0.2558f),
+            new Vector2(0.1f, 0.2487f),
+            new Vector2(0.15f, 0.2413f),
+            new Vector2(0.2f, 0.2344f),
+            new Vector2(0.25f, 0.2278f),
+            new Vector2(0.3f, 0.2214f),
+            new Vector2(0.35f, 0.2155f),
+            new Vector2(0.4f, 0.2104f),
+            new Vector2(0.45f, 0.2061f),
+            new Vector2(0.5f, 0.2032f),
+            new Vector2(0.55f, 0.202f),
+            new Vector2(0.6f, 0.2034f),
+            new Vector2(0.7f, 0.2165f),
+            new Vector2(0.725f, 0.223f),
+            new Vector2(0.75f, 0.2313f),
+            new Vector2(0.775f, 0.2417f),
+            new Vector2(0.8f, 0.2546f),
+            new Vector2(0.825f, 0.2706f),
+            new Vector2(0.85f, 0.2901f),
+            new Vector2(0.875f, 0.3136f),
+            new Vector2(0.9f, 0.3415f),
+            new Vector2(0.925f, 0.3734f),
+            new Vector2(0.95f, 0.4084f),
+            new Vector2(0.975f, 0.4448f),
+            new Vector2(1f, 0.4805f),
+            new Vector2(1.025f, 0.5136f),
+            new Vector2(1.05f, 0.5427f),
+            new Vector2(1.075f, 0.5677f),
+            new Vector2(1.1f, 0.5883f),
+            new Vector2(1.125f, 0.6053f),
+            new Vector2(1.15f, 0.6191f),
+            new Vector2(1.2f, 0.6393f),
+            new Vector2(1.25f, 0.6518f),
+            new Vector2(1.3f, 0.6589f),
+            new Vector2(1.35f, 0.6621f),
+            new Vector2(1.4f, 0.6625f),
+            new Vector2(1.45f, 0.6607f),
+            new Vector2(1.5f, 0.6573f),
+            new Vector2(1.55f, 0.6528f),
+            new Vector2(1.6f, 0.6474f),
+            new Vector2(1.65f, 0.6413f),
+            new Vector2(1.7f, 0.6347f),
+            new Vector2(1.75f, 0.628f),
+            new Vector2(1.8f, 0.621f),
+            new Vector2(1.85f, 0.6141f),
+            new Vector2(1.9f, 0.6072f),
+            new Vector2(1.95f, 0.6003f),
+            new Vector2(2f, 0.5934f),
+            new Vector2(2.05f, 0.5867f),
+            new Vector2(2.1f, 0.5804f),
+            new Vector2(2.15f, 0.5743f),
+            new Vector2(2.2f, 0.5685f),
+            new Vector2(2.25f, 0.563f),
+            new Vector2(2.3f, 0.5577f),
+            new Vector2(2.35f, 0.5527f),
+            new Vector2(2.4f, 0.5481f),
+            new Vector2(2.45f, 0.5438f),
+            new Vector2(2.5f, 0.5397f),
+            new Vector2(2.6f, 0.5325f),
+            new Vector2(2.7f, 0.5264f),
+            new Vector2(2.8f, 0.5211f),
+            new Vector2(2.9f, 0.5168f),
+            new Vector2(3f, 0.5133f),
+            new Vector2(3.1f, 0.5105f),
+            new Vector2(3.2f, 0.5084f),
+            new Vector2(3.3f, 0.5067f),
+            new Vector2(3.4f, 0.5054f),
+            new Vector2(3.5f, 0.504f),
+            new Vector2(3.6f, 0.503f),
+            new Vector2(3.7f, 0.5022f),
+            new Vector2(3.8f, 0.5016f),
+            new Vector2(3.9f, 0.501f),
+            new Vector2(4f, 0.5006f),
+            new Vector2(4.2f, 0.4998f),
+            new Vector2(4.4f, 0.4995f),
+            new Vector2(4.6f, 0.4992f),
+            new Vector2(4.8f, 0.499f),
+            new Vector2(5f, 0.4988f)
+        };
         public struct GStruct267
         {
             public float time;
@@ -997,23 +997,23 @@ namespace eft_dma_radar
             }
         };
         public static float CalculateG1DragCoefficient(float velocity)
-	    {
-		    int num = (int)Math.Floor(velocity / 343f / 0.05f);
-		    if (num <= 0)
-		    {
-		    	return 0f;
-		    }
-		    if (num > speedlist.Count - 1)
-		    {
-		    	return speedlist.Last<Vector2>().Y;
-		    }
-		    float num2 = speedlist[num - 1].X * 343f;
-		    float num3 = speedlist[num].X * 343f;
-		    float ballist = speedlist[num - 1].Y;
-		    return (speedlist[num].Y - ballist) / (num3 - num2) * (velocity - num2) + ballist;
-	    }
+        {
+            int num = (int)Math.Floor(velocity / 343f / 0.05f);
+            if (num <= 0)
+            {
+                return 0f;
+            }
+            if (num > speedlist.Count - 1)
+            {
+                return speedlist.Last<Vector2>().Y;
+            }
+            float num2 = speedlist[num - 1].X * 343f;
+            float num3 = speedlist[num].X * 343f;
+            float ballist = speedlist[num - 1].Y;
+            return (speedlist[num].Y - ballist) / (num3 - num2) * (velocity - num2) + ballist;
+        }
         static Vector3 gravity = new Vector3(0, -9.81f, 0);
-        public static float FormTrajectory(float 距离,Vector3 zeroPosition, Vector3 zeroVelocity, float bulletMassGram, float bulletDiameterMilimeters, float ballisticCoefficient,out GStruct267[] trajectoryInfo)
+        public static float FormTrajectory(float 距离, Vector3 zeroPosition, Vector3 zeroVelocity, float bulletMassGram, float bulletDiameterMilimeters, float ballisticCoefficient, out GStruct267[] trajectoryInfo)
         {
             trajectoryInfo = new GStruct267[600];
             float num = bulletMassGram / 1000f;
@@ -1210,7 +1210,7 @@ namespace eft_dma_radar
 
             this._cameraManager.GetViewmatrixAsync();
             //ulong method = MonoSharp.FindMethodOfClass("Assembly-CSharp", "\uE2EC", "FormTrajectory");
-            
+
 
             //if (!KmBoxWrapper.done_init)
             //{
@@ -1249,7 +1249,7 @@ namespace eft_dma_radar
                 bool bHeld = frmMain.上侧键;
                 Vector3 cameraPos = GetFireportPos();
                 //bool bHeld = KmBox.kmNet_monitor_mouse_side2() == 1;
-                
+
                 if (bHeld && bHeld == bLastHeld && udPlayer is not null && udPlayer.IsAlive && udPlayer.IsActive)
                 {
                     if (锁定玩家 != null && 锁定玩家 != udPlayer)
@@ -1259,7 +1259,7 @@ namespace eft_dma_radar
                         //return;
                     }
 
-                    
+
                     GetHeadScr2(udPlayer, out Vector2 headPos, out Vector3 headPos1);
                     Vector2 rel = new Vector2(headPos.X - (1920f / 2f), headPos.Y - (1080f / 2f));
                     var dist = Math.Sqrt(Math.Abs(rel.X) * Math.Abs(rel.Y));
@@ -1267,19 +1267,19 @@ namespace eft_dma_radar
 
                     //if (DateTime.Now - 上次自瞄时间 > TimeSpan.FromMilliseconds(3))
                     //{
-                        if (dist < 90)
-                        {
-                            //KmBox.kmNet_mouse_move(Convert.ToInt16(Math.Round((rel.X) * 0.25, 0)), Convert.ToInt16(Math.Round((rel.Y) * 0.25, 0)));
-                            Vector2 ang = CalcAngle(cameraPos, headPos1);
-                            
-                            if (!float.IsNaN(ang.X) && !float.IsNaN(ang.Y))
-                            {
-                                LocalPlayer.SetRotationFr(ang);
-                            }
+                    if (dist < 90)
+                    {
+                        //KmBox.kmNet_mouse_move(Convert.ToInt16(Math.Round((rel.X) * 0.25, 0)), Convert.ToInt16(Math.Round((rel.Y) * 0.25, 0)));
+                        Vector2 ang = CalcAngle(cameraPos, headPos1);
 
-                            锁定玩家 = udPlayer;
-                            上次自瞄时间 = DateTime.Now;
+                        if (!float.IsNaN(ang.X) && !float.IsNaN(ang.Y))
+                        {
+                            LocalPlayer.SetRotationFr(ang);
                         }
+
+                        锁定玩家 = udPlayer;
+                        上次自瞄时间 = DateTime.Now;
+                    }
 
                     //}
 
@@ -1354,7 +1354,8 @@ namespace eft_dma_radar
 
                                 //}
                                 udPlayer = 最近目标.Player;
-                            }else
+                            }
+                            else
                             {
                                 if (锁定玩家 != null && 锁定玩家 != clozestPlayer)
                                 {
@@ -1384,7 +1385,7 @@ namespace eft_dma_radar
                                 udPlayer = clozestPlayer;
                             }
                         }
-                        
+
                     }
                 }
                 if (!bHeld)
