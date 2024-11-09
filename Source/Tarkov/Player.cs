@@ -560,7 +560,7 @@ namespace eft_dma_radar
                     if (!inFaction && Memory.IsPvEMode)
                     {
                         var dogtagSlot = this.Gear.FirstOrDefault(x => x.Slot.Key == "Dogtag");
-                        
+
                         if (dogtagSlot.Item is not null)
                             playerType = (dogtagSlot.Item.Short == "BEAR" ? PlayerType.BEAR : PlayerType.USEC);
                     }
@@ -785,6 +785,8 @@ namespace eft_dma_radar
                 var boneIndex = (uint)bone;
                 if (this.Name == "???")
                     boneIndex = (uint)31;
+                if (this.Name != "???" && frmMain.锁腿1)
+                    boneIndex = (uint)PlayerBones.HumanRThigh2;
                 var pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
                 //var Fire = Memory.ReadPtrChain(this.Base, [Offsets.Player.ProceduralWeaponAnimation, 0x18, 0x80, 0x10]);
 

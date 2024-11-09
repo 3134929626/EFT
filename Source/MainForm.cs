@@ -2747,6 +2747,8 @@ namespace eft_dma_radar
             }
         }
         public static bool 上侧键 { get; set; } = false;
+        public static bool F6 { get; set; } = false;
+        public static bool F7 { get; set; } = false;
         private void 按键监控()
         {
             while (!cts.IsCancellationRequested)
@@ -2754,6 +2756,26 @@ namespace eft_dma_radar
                 if (nc连接)
                 {
                     上侧键 = keyboard.IsKeyDown(0x06);
+                    F6 = keyboard.IsKeyDown(0x75);
+                    F7 = keyboard.IsKeyDown(0x76);
+                }
+                if (F6)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        var 状态 = 锁腿.Checked;
+                        锁腿.Checked = !状态;
+                    });
+                    Thread.Sleep(400);
+                }
+                if (F7)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        var 状态 = swAimview.Checked;
+                        swAimview.Checked = !状态;
+                    });
+                    Thread.Sleep(400);
                 }
                 Thread.Sleep(80);
             }
