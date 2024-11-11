@@ -1515,7 +1515,7 @@ namespace eft_dma_radar
 
                 if (player.Has自闭头 && player.Type != PlayerType.Teammate && player.Type != PlayerType.LocalPlayer)
                     rightLines.Add("有自闭头！！！！！");
-                    
+
                 if (playerSettings.Thermal && player.HasThermal)
                     rightLines.Add("有热成像");
 
@@ -2050,6 +2050,14 @@ namespace eft_dma_radar
                 return; // No status text to draw
             }
 
+            if (swAimview.Checked == true)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    swAimview.Checked = false;
+                });
+            }
+            
             var centerX = this.mapCanvas.Width / 2;
             var centerY = this.mapCanvas.Height / 2;
 
