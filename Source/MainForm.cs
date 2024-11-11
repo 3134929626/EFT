@@ -1513,6 +1513,9 @@ namespace eft_dma_radar
                         rightLines.Add($"{player.ItemInHands.Item.GearInfo.AmmoType}/{player.ItemInHands.Item.GearInfo.AmmoCount}");
                 }
 
+                if (player.Has自闭头 && player.Type != PlayerType.Teammate && player.Type != PlayerType.LocalPlayer)
+                    rightLines.Add("有自闭头！！！！！");
+                    
                 if (playerSettings.Thermal && player.HasThermal)
                     rightLines.Add("有热成像");
 

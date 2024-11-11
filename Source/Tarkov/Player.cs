@@ -122,6 +122,7 @@ namespace eft_dma_radar
         public int PlayerSide { get; set; }
         public int PlayerRole { get; set; }
         public bool HasRequiredGear { get; set; } = false;
+        public bool Has自闭头 { get; set; } = false;
 
         public float bullet_speed { get; set; }
         public float ballistic_coeff { get; set; }
@@ -507,10 +508,12 @@ namespace eft_dma_radar
         {
             this.ItemInHands = this.GearManager.GearItems.FirstOrDefault(x => x.Pointer == pointer);
         }
+        private static readonly HashSet<string> 自闭头_IDS = new HashSet<string> { "5c091a4e0db834001d5addc8", "5c0e874186f7745dc7616606", "5d6d3716a4b9361bc8618872", "5aa7e4a4e5b5b000137b76f2", "5aa7e454e5b5b0214e506fa2", "5f60c74e3b85f6263c145586", "5aa7e276e5b5b000171d0647", "60a7ad3a0c5cb24b0134664a", "60a7ad2a2198820d95707a2e", "5ca20ee186f774799474abc2" };
 
         public void CheckForRequiredGear()
         {
             var found = false;
+            var found1 = false;
             var loot = Memory.Loot;
             var requiredQuestItems = QuestManager.RequiredItems;
 
@@ -528,7 +531,22 @@ namespace eft_dma_radar
                 }
             }
 
+            foreach (var gearItem in this.Gear)
+            {
+                var parentItem = gearItem.Item.ID;
+
+                if (自闭头_IDS.Contains(parentItem) ||
+                    gearItem.Item.Loot.Any(x => 自闭头_IDS.Contains(x.ID)) ||
+                    (loot is not null && loot.RequiredFilterItems is not null && (loot.RequiredFilterItems.ContainsKey(parentItem) ||
+                                      gearItem.Item.Loot.Any(x => loot.RequiredFilterItems.ContainsKey(x.ID)))))
+                {
+                    found1 = true;
+                    break;
+                }
+            }
+
             this.HasRequiredGear = found;
+            this.Has自闭头 = found1;
         }
         #endregion
 
