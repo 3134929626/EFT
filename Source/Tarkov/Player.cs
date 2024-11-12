@@ -801,9 +801,7 @@ namespace eft_dma_radar
             foreach (var bone in RequiredBones)
             {
                 var boneIndex = (uint)bone;
-                if (this.Name == "???")
-                    boneIndex = (uint)31;
-                if (this.Name != "???" && frmMain.锁腿1)
+                if (frmMain.锁腿1)
                     boneIndex = (uint)PlayerBones.HumanRThigh2;
                 var pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
                 //var Fire = Memory.ReadPtrChain(this.Base, [Offsets.Player.ProceduralWeaponAnimation, 0x18, 0x80, 0x10]);
