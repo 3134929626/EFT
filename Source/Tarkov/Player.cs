@@ -137,7 +137,7 @@ namespace eft_dma_radar
         #region Getters
         public List<PlayerBones> RequiredBones { get; } = new List<PlayerBones>
         {
-             PlayerBones.HumanNeck
+             PlayerBones.HumanHead
             //PlayerBones.HumanPelvis, PlayerBones.HumanHead, PlayerBones.HumanLForearm2,
             //PlayerBones.HumanLPalm, PlayerBones.HumanRForearm2, PlayerBones.HumanRPalm,
             //PlayerBones.HumanLThigh2, PlayerBones.HumanLFoot,
@@ -811,6 +811,10 @@ namespace eft_dma_radar
                 this.BoneTransforms.Add(new Transform(pointer, false));
 
                 boneIndex = (uint)PlayerBones.HumanRThigh2;
+                pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
+                this.BoneTransforms.Add(new Transform(pointer, false));
+
+                boneIndex = (uint)PlayerBones.HumanNeck;
                 pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
                 this.BoneTransforms.Add(new Transform(pointer, false));
                 

@@ -814,7 +814,7 @@ namespace eft_dma_radar
             if (player.BoneTransforms != null && player.BoneTransforms.Count != 0 && !player.IsLocalPlayer && (!player.IsFriendlyActive || frmMain.瞄准队友) && player.IsAlive && player.IsActive && Vector3.Distance(player.Position, LocalPlayer.Position) < Program.Config.AimDis)
             {
                 //Vector3 temp = GetHead(player);
-                Vector3 temp = frmMain.锁腿1 ? player.BoneTransforms[1].GetPosition() : player.BoneTransforms[0].GetPosition();
+                Vector3 temp = frmMain.锁腿1 ? player.BoneTransforms[1].GetPosition() : (Vector3.Distance(player.Position, LocalPlayer.Position) < 60f ? player.BoneTransforms[2].GetPosition() : player.BoneTransforms[0].GetPosition());
                 //var localbone = new Vector3(this.LocalPlayer.Position.X, this.LocalPlayer.Position.Z, this.LocalPlayer.Position.Y);
 
                 Vector3 HeadPos = new Vector3(temp.X, temp.Z, temp.Y);
@@ -1032,7 +1032,7 @@ namespace eft_dma_radar
                 Vector3 a = gravity + Vector3.Normalize(velocity) * (-num5 * 1.2f * num3 * velocity.Length() * velocity.Length()) / (2f * num);
                 Vector3 position2 = position + velocity * 0.01f + 5E-05f * a;
                 Vector3 velocity2 = velocity + a * 0.01f;
-                if (MathF.Sqrt(position2.X * position2.X + position2.Y * position2.Y) > 50 && !flag)
+                if (position2.X > 50f && !flag)
                 {
                     position2.Y = zeroVelocity.Y * num4;
                     //velocity2.Y = zeroVelocity.Y;
