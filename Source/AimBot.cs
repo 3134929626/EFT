@@ -814,7 +814,7 @@ namespace eft_dma_radar
             if (player.BoneTransforms != null && player.BoneTransforms.Count != 0 && !player.IsLocalPlayer && (!player.IsFriendlyActive || frmMain.瞄准队友) && player.IsAlive && player.IsActive && Vector3.Distance(player.Position, LocalPlayer.Position) < Program.Config.AimDis)
             {
                 //Vector3 temp = GetHead(player);
-                Vector3 temp = frmMain.锁腿1 ? player.BoneTransforms[1].GetPosition() : (Vector3.Distance(player.Position, LocalPlayer.Position) < 60f ? player.BoneTransforms[2].GetPosition() : player.BoneTransforms[0].GetPosition());
+                Vector3 temp = frmMain.锁腿1 ? player.BoneTransforms[1].GetPosition() : (Vector3.Distance(player.Position, LocalPlayer.Position) < 70f && Vector3.Distance(player.Position, LocalPlayer.Position) > 25f ? player.BoneTransforms[2].GetPosition() : player.BoneTransforms[0].GetPosition());
                 //var localbone = new Vector3(this.LocalPlayer.Position.X, this.LocalPlayer.Position.Z, this.LocalPlayer.Position.Y);
 
                 Vector3 HeadPos = new Vector3(temp.X, temp.Z, temp.Y);
