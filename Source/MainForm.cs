@@ -930,15 +930,19 @@ namespace eft_dma_radar
 
         private void MapChangeTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this.BeginInvoke(
-                new MethodInvoker(
-                    delegate
-                    {
-                        btnToggleMap.Enabled = false;
-                        btnToggleMap.Text = "Loading...";
-                    }
-                )
-            );
+            if(this.IsHandleCreated)
+            {
+                this.BeginInvoke(
+                    new MethodInvoker(
+                        delegate
+                        {
+                            btnToggleMap.Enabled = false;
+                            btnToggleMap.Text = "Loading...";
+                        }
+                    )
+                );
+            }
+
 
             lock (this.renderLock)
             {
@@ -974,15 +978,19 @@ namespace eft_dma_radar
                 }
                 finally
                 {
-                    this.BeginInvoke(
-                        new MethodInvoker(
-                            delegate
-                            {
-                                btnToggleMap.Enabled = true;
-                                btnToggleMap.Text = "Toggle Map (F5)";
-                            }
-                        )
-                    );
+                    if(this.IsHandleCreated)
+                    {
+                        this.BeginInvoke(
+                            new MethodInvoker(
+                                delegate
+                                {
+                                    btnToggleMap.Enabled = true;
+                                    btnToggleMap.Text = "Toggle Map (F5)";
+                                }
+                            )
+                        );
+                    }
+
                 }
             }
         }
@@ -3606,11 +3614,15 @@ namespace eft_dma_radar
 
             if (Enum.TryParse(actionWithoutSpaces, out HotkeyAction parsedAction) && hotkeyActions.TryGetValue(parsedAction, out var actionHandler))
             {
-                this.BeginInvoke(new Action(() =>
+                if(this.IsHandleCreated)
                 {
-                    var enabled = hotkeyType == HotkeyType.OnKey || !this.config.GetConfigValue(action);
-                    actionHandler(enabled);
-                }));
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        var enabled = hotkeyType == HotkeyType.OnKey || !this.config.GetConfigValue(action);
+                        actionHandler(enabled);
+                    }));
+                }
+
             }
             else
             {
@@ -3634,7 +3646,13 @@ namespace eft_dma_radar
                 var actionWithoutSpaces = hotkey.Action.Replace(" ", "");
 
                 if (Enum.TryParse(actionWithoutSpaces, out HotkeyAction action) && hotkeyActions.TryGetValue(action, out var actionHandler))
-                    this.BeginInvoke(new Action(() => actionHandler(false)));
+                {
+                    if(this.IsHandleCreated)
+                    {
+                        this.BeginInvoke(new Action(() => actionHandler(false)));
+                    }
+                }
+                    
             }
         }
 
@@ -4805,11 +4823,15 @@ namespace eft_dma_radar
 
             this.UpdatePaintColorControls();
 
-            this.BeginInvoke(new Action(() =>
+            if(this.IsHandleCreated)
             {
-                this.Invalidate();
-                this.Refresh();
-            }));
+                this.BeginInvoke(new Action(() =>
+                {
+                    this.Invalidate();
+                    this.Refresh();
+                }));
+            }
+
         }
 
         private Color DefaultPaintColorToColor(string name)
