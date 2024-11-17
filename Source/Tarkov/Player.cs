@@ -814,9 +814,9 @@ namespace eft_dma_radar
                 pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
                 this.BoneTransforms.Add(new Transform(pointer, false));
 
-                boneIndex = (uint)PlayerBones.HumanNeck;
-                pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
-                this.BoneTransforms.Add(new Transform(pointer, false));
+                //boneIndex = (uint)PlayerBones.HumanNeck;
+                //pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
+                //this.BoneTransforms.Add(new Transform(pointer, false));
                 
                 this.BonePositions = new Vector3(0f, 0f, 0f);
 
