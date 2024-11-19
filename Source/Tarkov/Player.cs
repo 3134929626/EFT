@@ -536,9 +536,7 @@ namespace eft_dma_radar
                 var parentItem = gearItem.Item.ID;
 
                 if (自闭头_IDS.Contains(parentItem) ||
-                    gearItem.Item.Loot.Any(x => 自闭头_IDS.Contains(x.ID)) ||
-                    (loot is not null && loot.RequiredFilterItems is not null && (loot.RequiredFilterItems.ContainsKey(parentItem) ||
-                                      gearItem.Item.Loot.Any(x => loot.RequiredFilterItems.ContainsKey(x.ID)))))
+                    gearItem.Item.Loot.Any(x => 自闭头_IDS.Contains(x.ID)))
                 {
                     found1 = true;
                     break;
