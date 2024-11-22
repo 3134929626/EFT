@@ -519,6 +519,8 @@ namespace eft_dma_radar
             UnknownQuestItems = false;
             VSync = true;
             ZoomSensitivity = 25;
+            AimDis = 400;
+            GamePing = 74;
         }
 
         /// <summary>
