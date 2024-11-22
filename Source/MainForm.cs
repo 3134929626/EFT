@@ -11,6 +11,8 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Globalization;
 using Offsets;
+using System.Net;
+using System.Text;
 using static Vmmsharp.LeechCore;
 using static eft_dma_radar.Aimbot;
 
@@ -930,7 +932,7 @@ namespace eft_dma_radar
 
         private void MapChangeTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if(this.IsHandleCreated)
+            if (this.IsHandleCreated)
             {
                 this.BeginInvoke(
                     new MethodInvoker(
@@ -978,7 +980,7 @@ namespace eft_dma_radar
                 }
                 finally
                 {
-                    if(this.IsHandleCreated)
+                    if (this.IsHandleCreated)
                     {
                         this.BeginInvoke(
                             new MethodInvoker(
@@ -2065,7 +2067,7 @@ namespace eft_dma_radar
                     swAimview.Checked = false;
                 });
             }
-            
+
             var centerX = this.mapCanvas.Width / 2;
             var centerY = this.mapCanvas.Height / 2;
 
@@ -2833,6 +2835,76 @@ namespace eft_dma_radar
 
 
         }
+        private void Draw禁止(SKCanvas canvas)
+        {
+            swMasterSwitch.Checked = false;
+
+            var centerX = this.mapCanvas.Width / 2;
+            var centerY = this.mapCanvas.Height / 2;
+
+            //var index = SKFontManager.Default.FontFamilies.ToList().IndexOf("宋体");
+            //创建宋体字形
+            //var songtiTypeface = SKFontManager.Default.GetFontStyles(index).CreateTypeface(0);
+            //SKTypeface.FromFamilyName("SimSun");
+
+            SKPaint TextRadarStatus = new SKPaint
+            {
+                Color = SKColors.Red,
+                TextSize = 58,
+                Typeface = SKTypeface.FromFamilyName("宋体", SKTypefaceStyle.Bold),
+                IsStroke = false,
+                TextEncoding = SKTextEncoding.Utf8,
+                IsAntialias = true,
+                TextAlign = SKTextAlign.Center
+            };
+            //paint.TextEncoding = SKTextEncoding.Utf8;
+
+            canvas.DrawText("已被禁用", centerX, centerY, TextRadarStatus);
+
+        }
+        static string 返回 = "0";
+        DateTime lastValidationTime = DateTime.MinValue;
+        private int 验证()
+        {
+            var url = "http://49.235.164.200/yz/yz.txt";
+            var web = new WebClient();
+
+
+            // 上次验证时间
+
+
+            // 检查是否超过 15 秒
+            if (DateTime.Now - lastValidationTime < TimeSpan.FromSeconds(15))
+            {
+
+
+                if (返回 == "1")
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            // 更新上次验证时间
+            lastValidationTime = DateTime.Now;
+
+            byte[] responseData = web.DownloadData(url);
+            返回 = Encoding.UTF8.GetString(responseData);
+
+            if (返回 == "1")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        int yz = 0;
 
         private void skMapCanvas_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
         {
@@ -2845,43 +2917,49 @@ namespace eft_dma_radar
                 this.DrawStatusText(canvas);
                 return;
             }
+            yz = 验证();
 
-            lock (this.renderLock)
+            if (yz == 1)
             {
-                this.DrawMap(canvas);
-
-                this.Draw测试(canvas);
-
-                if (this.config.ProcessLoot)
+                lock (this.renderLock)
                 {
-                    if (this.config.LooseLoot ||
-                        this.config.LootCorpses ||
-                        this.config.LootContainerSettings["Enabled"] ||
-                        (this.config.QuestHelper && this.config.QuestLootItems))
+                    this.DrawMap(canvas);
+
+                    this.Draw测试(canvas);
+
+                    if (this.config.ProcessLoot)
                     {
-                        this.DrawItemAnimations(canvas);
-                        this.DrawLoot(canvas);
+                        if (this.config.LooseLoot ||
+                            this.config.LootCorpses ||
+                            this.config.LootContainerSettings["Enabled"] ||
+                            (this.config.QuestHelper && this.config.QuestLootItems))
+                        {
+                            this.DrawItemAnimations(canvas);
+                            this.DrawLoot(canvas);
+                        }
                     }
+                    else if (this.config.LootCorpses)
+                    {
+                        this.DrawCorpses(canvas);
+                    }
+
+                    if (this.config.QuestHelper)
+                        this.DrawQuestItems(canvas);
+
+                    this.DrawGrenades(canvas);
+                    this.DrawTripwires(canvas);
+                    this.DrawExfils(canvas);
+                    this.DrawTransits(canvas);
+                    this.DrawPlayers(canvas);
+
+                    if (this.config.Aimview)
+                        this.DrawAimview(canvas);
+
+                    this.DrawToolTips(canvas);
                 }
-                else if (this.config.LootCorpses)
-                {
-                    this.DrawCorpses(canvas);
-                }
-
-                if (this.config.QuestHelper)
-                    this.DrawQuestItems(canvas);
-
-                this.DrawGrenades(canvas);
-                this.DrawTripwires(canvas);
-                this.DrawExfils(canvas);
-                this.DrawTransits(canvas);
-                this.DrawPlayers(canvas);
-
-                if (this.config.Aimview)
-                    this.DrawAimview(canvas);
-
-                this.DrawToolTips(canvas);
             }
+            else
+                Draw禁止(canvas);
 
             canvas.Flush();
         }
@@ -3614,7 +3692,7 @@ namespace eft_dma_radar
 
             if (Enum.TryParse(actionWithoutSpaces, out HotkeyAction parsedAction) && hotkeyActions.TryGetValue(parsedAction, out var actionHandler))
             {
-                if(this.IsHandleCreated)
+                if (this.IsHandleCreated)
                 {
                     this.BeginInvoke(new Action(() =>
                     {
@@ -3647,12 +3725,12 @@ namespace eft_dma_radar
 
                 if (Enum.TryParse(actionWithoutSpaces, out HotkeyAction action) && hotkeyActions.TryGetValue(action, out var actionHandler))
                 {
-                    if(this.IsHandleCreated)
+                    if (this.IsHandleCreated)
                     {
                         this.BeginInvoke(new Action(() => actionHandler(false)));
                     }
                 }
-                    
+
             }
         }
 
@@ -4823,7 +4901,7 @@ namespace eft_dma_radar
 
             this.UpdatePaintColorControls();
 
-            if(this.IsHandleCreated)
+            if (this.IsHandleCreated)
             {
                 this.BeginInvoke(new Action(() =>
                 {
