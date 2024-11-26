@@ -988,10 +988,15 @@ namespace eft_dma_radar
                 Vector3 a = gravity + Vector3.Normalize(velocity) * (-num5 * 1.2f * num3 * velocity.Length() * velocity.Length()) / (2f * num);
                 Vector3 position2 = position + velocity * 0.01f + 5E-05f * a;
                 Vector3 velocity2 = velocity + a * 0.01f;
-                if (MathF.Sqrt(position2.X * position2.X + position2.Y * position2.Y) > 50 && !flag)
+                if (position2.X > 100f && !flag)
                 {
                     position2.Y = zeroVelocity.Y * num4;
+                    //velocity2.Y = zeroVelocity.Y;
                     flag = true;
+                }
+                if (!flag)
+                {
+                    position2.Y = zeroVelocity.Y * num4;
                 }
                 trajectoryInfo[i] = new GStruct267(num4, position2, velocity2);
                 num4 += 0.01f;
@@ -1004,6 +1009,10 @@ namespace eft_dma_radar
                 if (trajectoryInfo[i].position.X > 距离)
                 {
                     //json.Add(trajectoryInfo[i].time.ToString() + "," + trajectoryInfo[i].position.ToString() + "," + trajectoryInfo[i].velocity.ToString());
+                    if (MathF.Abs(trajectoryInfo[i - 1].position.X - 距离) < MathF.Abs(trajectoryInfo[i].position.X - 距离))
+                    {
+                        return trajectoryInfo[i - 1].time;
+                    }
                     return trajectoryInfo[i].time;
                     //break;
                 }
@@ -1033,11 +1042,15 @@ namespace eft_dma_radar
                 Vector3 a = gravity + Vector3.Normalize(velocity) * (-num5 * 1.2f * num3 * velocity.Length() * velocity.Length()) / (2f * num);
                 Vector3 position2 = position + velocity * 0.01f + 5E-05f * a;
                 Vector3 velocity2 = velocity + a * 0.01f;
-                if (position2.X > 25f && !flag)
+                if (position2.X > 100f && !flag)
                 {
                     position2.Y = zeroVelocity.Y * num4;
                     //velocity2.Y = zeroVelocity.Y;
                     flag = true;
+                }
+                if (!flag)
+                {
+                    position2.Y = zeroVelocity.Y * num4;
                 }
                 trajectoryInfo[i] = new GStruct267(num4, position2, velocity2);
                 num4 += 0.01f;
@@ -1050,6 +1063,10 @@ namespace eft_dma_radar
                 if (MathF.Sqrt(trajectoryInfo[i].position.X * trajectoryInfo[i].position.X + trajectoryInfo[i].position.Y * trajectoryInfo[i].position.Y) > 距离)
                 {
                     //json.Add(trajectoryInfo[i].time.ToString() + "," + trajectoryInfo[i].position.ToString() + "," + trajectoryInfo[i].velocity.ToString());
+                    if (MathF.Abs(MathF.Sqrt(trajectoryInfo[i - 1].position.X * trajectoryInfo[i - 1].position.X + trajectoryInfo[i - 1].position.Y * trajectoryInfo[i - 1].position.Y) - 距离) < MathF.Abs(MathF.Sqrt(trajectoryInfo[i].position.X * trajectoryInfo[i].position.X + trajectoryInfo[i].position.Y * trajectoryInfo[i].position.Y) - 距离))
+                    {
+                        return Math.Abs(trajectoryInfo[i - 1].position.Y);
+                    }
                     return Math.Abs(trajectoryInfo[i].position.Y);
                     //break;
                 }
