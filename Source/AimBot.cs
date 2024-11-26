@@ -1033,7 +1033,7 @@ namespace eft_dma_radar
                 Vector3 a = gravity + Vector3.Normalize(velocity) * (-num5 * 1.2f * num3 * velocity.Length() * velocity.Length()) / (2f * num);
                 Vector3 position2 = position + velocity * 0.01f + 5E-05f * a;
                 Vector3 velocity2 = velocity + a * 0.01f;
-                if (position2.X > 50f && !flag)
+                if (position2.X > 25f && !flag)
                 {
                     position2.Y = zeroVelocity.Y * num4;
                     //velocity2.Y = zeroVelocity.Y;
