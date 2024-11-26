@@ -5425,8 +5425,8 @@ namespace eft_dma_radar
 
         private void UpdateWatchlistPlayers(bool clearItems)
         {
-            var enemyPlayers = this.AllPlayers?
-                .Values
+            var enemyPlayers = this.AllPlayers
+                ?.Select(x => x.Value)
                 .Where(x => x.IsHumanHostileActive)
                 .ToList();
 
@@ -5450,7 +5450,7 @@ namespace eft_dma_radar
                     Text = entry.Name,
                     Tag = entry,
                 })
-                .OrderBy(entry => entry.Text)
+                .OrderBy(entry => entry.Name)
                 .ToArray());
             lstWatchlistPlayerList.EndUpdate();
         }
