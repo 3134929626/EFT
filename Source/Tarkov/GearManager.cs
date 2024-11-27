@@ -226,7 +226,7 @@ namespace eft_dma_radar
 
             for (int i = 0; i < slotDict.Count; i++)
             {
-                ProcessSlot(i, scatterReadMap, loot, ref result, recurseDepth, slotNames);
+                this.ProcessSlot(i, scatterReadMap, loot, ref result, recurseDepth, slotNames);
             }
         }
 

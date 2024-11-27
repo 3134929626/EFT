@@ -512,6 +512,9 @@ namespace eft_dma_radar
 
         public void CheckForRequiredGear()
         {
+            if (this.Gear.Count < 1)
+                return;
+
             var found = false;
             var found1 = false;
             var loot = Memory.Loot;
@@ -602,11 +605,13 @@ namespace eft_dma_radar
                 {
                     return (this.PlayerRole == 51 ? PlayerType.BEAR : PlayerType.USEC);
                 }
+                else if (Program.AIFactionManager.IsInFaction(this.Name, out var playerType))
+                {
+                    return playerType;
+                }
                 else
                 {
-                    Program.AIFactionManager.IsInFaction(this.Name, out var playerType);
-
-                    return playerType;
+                    return PlayerType.Scav; // default to scav
                 }
             }
         }

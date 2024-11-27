@@ -140,6 +140,9 @@ namespace eft_dma_radar
             var setAnyMaterial = false;
             var entries = new List<IScatterWriteEntry>();
 
+            if (Memory.IsExtracting)
+                return false;
+
             try
             {
                 var BodySkins = Memory.ReadPtr(player.PlayerBody + 0x40);
@@ -172,7 +175,9 @@ namespace eft_dma_radar
                                     {
                                         skinnedMeshRender = Memory.ReadPtr(skinnedMeshRender + 0x20);
                                     }
-                                    catch { }
+                                    catch {
+                                        continue;
+                                    }
                                 }
 
                                 var materialDictionary = Memory.ReadPtr(skinnedMeshRender + 0x10);

@@ -1164,7 +1164,7 @@ namespace eft_dma_radar
 
         private void UpdateWindowTitle()
         {
-            if (!this.InGame || this.LocalPlayer == null)
+            if (!this.InGame || this.LocalPlayer is null)
             {
                 this.ResetVariables();
                 return;
@@ -1482,8 +1482,9 @@ namespace eft_dma_radar
             if (!this.InGame || this.LocalPlayer is null)
                 return;
 
-            var typeIndex = this.GetPlayerTypeIndex(player.Type);
-            var type = PlayerTypeNames[typeIndex];
+            var type = player.Type.ToString();
+            if (type.Equals("BEAR", StringComparison.OrdinalIgnoreCase) || type.Equals("USEC", StringComparison.OrdinalIgnoreCase))
+                type = "PMC";
 
             var playerSettings = this.config.PlayerInformationSettings[type];
             var height = playerZoomedPos.Height - localPlayerMapPos.Height;
@@ -2630,8 +2631,10 @@ namespace eft_dma_radar
 
         private void UpdateClosestObjects(Vector2 mouse, float threshold)
         {
-            var players = this.AllPlayers?.Values.Where(x => x.Type != PlayerType.LocalPlayer && !x.HasExfild).ToList();
-            this.closestPlayerToMouse = this.FindClosestObject(players, mouse, x => x.ZoomedPosition, threshold);
+            var allPlayers = this.AllPlayers
+                            .Select(x => x.Value)
+                            .Where(x => x.IsActive && x.IsAlive && !x.HasExfild);
+            this.closestPlayerToMouse = this.FindClosestObject(allPlayers, mouse, x => x.ZoomedPosition, threshold);
 
             this.mouseOverGroup = this.closestPlayerToMouse?.IsHumanHostile == true && this.closestPlayerToMouse.GroupID != -1
                 ? this.closestPlayerToMouse.GroupID
@@ -2718,7 +2721,7 @@ namespace eft_dma_radar
 
         private void skMapCanvas_MouseMovePlayer(object sender, MouseEventArgs e)
         {
-            if (!this.InGame || this.LocalPlayer == null)
+            if (!this.IsReadyToRender())
             {
                 this.ClearAllRefs();
                 return;
