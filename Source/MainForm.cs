@@ -1486,6 +1486,9 @@ namespace eft_dma_radar
             if (type.Equals("BEAR", StringComparison.OrdinalIgnoreCase) || type.Equals("USEC", StringComparison.OrdinalIgnoreCase))
                 type = "PMC";
 
+            if (type.Equals("SpecialPlayer", StringComparison.OrdinalIgnoreCase))
+                type = "Special";
+
             var playerSettings = this.config.PlayerInformationSettings[type];
             var height = playerZoomedPos.Height - localPlayerMapPos.Height;
             var dist = Vector3.Distance(this.LocalPlayer.Position, player.Position);
@@ -1517,8 +1520,8 @@ namespace eft_dma_radar
 
                 if (player.ItemInHands.Item is not null)
                 {
-                    if (playerSettings.ActiveWeapon && !string.IsNullOrEmpty(player.ItemInHands.Item.Name))
-                        rightLines.Add(player.ItemInHands.Item.Name);
+                    if (playerSettings.ActiveWeapon && !string.IsNullOrEmpty(player.ItemInHands.Item.Short))
+                        rightLines.Add(player.ItemInHands.Item.Short);
 
                     if (playerSettings.AmmoType && !string.IsNullOrEmpty(player.ItemInHands.Item.GearInfo.AmmoType))
                         rightLines.Add($"{player.ItemInHands.Item.GearInfo.AmmoType}/{player.ItemInHands.Item.GearInfo.AmmoCount}");
@@ -2831,8 +2834,15 @@ namespace eft_dma_radar
             var centerY = this.mapCanvas.Height / 2;
             if (!nc连接)
                 canvas.DrawText(nc连接 ? "按键初始化成功！" : "按键初始化失败！", centerX, 16, TextRadarStatus);
-            canvas.DrawText("子弹速度:" + this.LocalPlayer.bullet_speed, ("子弹速度:" + this.LocalPlayer.bullet_speed).Length + 44, 16, TextRadarStatus);
+            canvas.DrawText("子弹速度:" + this.LocalPlayer.bullet_speed, 62, 16, TextRadarStatus);
             canvas.DrawText("锁定部位:" + (锁腿1 ? "腿部" : "头部"), 62, 34, TextRadarStatus);
+
+            var IsLocalPlayer = this.AllPlayers
+            .Select(x => x.Value)
+            .FirstOrDefault(x => x.IsActive && x.IsAlive && !x.HasExfild && x.IsLocalPlayer);
+            if (IsLocalPlayer is null || IsLocalPlayer.ItemInHands.Item is null)
+                return;
+            canvas.DrawText(IsLocalPlayer.ItemInHands.Item.GearInfo.AmmoType + "/" + IsLocalPlayer.ItemInHands.Item.GearInfo.AmmoCount, 62, 52, TextRadarStatus);
             //canvas.DrawText("武器:" + LocalPlayer.GearManager.ActiveWeapon.Item.Name, ("武器:" + LocalPlayer.GearManager.ActiveWeapon.Item.Name).Length / 2, 34, TextRadarStatus);
 
 
@@ -5910,6 +5920,31 @@ namespace eft_dma_radar
         private void 当前延迟_onValueChanged(object sender, int newValue)
         {
             this.config.GamePing = newValue;
+        }
+
+        private void 成分查询_Click(object sender, EventArgs e)
+        {
+            var selectedProfile = this.GetActiveWatchlistProfile();
+            var selectedPlayer = lstWatchlistPlayerList.SelectedItems.Count > 0 ? lstWatchlistPlayerList.SelectedItems[0].Tag as Player : null;
+
+            if (selectedProfile is not null)
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo($"https://tarkov.dev/players/regular/{selectedPlayer.AccountID}") { UseShellExecute = true });
+                }
+                catch (System.ComponentModel.Win32Exception noBrowser)
+                {
+                    if (noBrowser.ErrorCode == -2147467259)
+                        MessageBox.Show(noBrowser.Message);
+                }
+                catch (System.Exception other)
+                {
+                    MessageBox.Show(other.Message);
+                }
+            }
+
+
         }
     }
 }

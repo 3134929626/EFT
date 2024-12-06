@@ -506,7 +506,7 @@ namespace eft_dma_radar
 
         public void SetItemInHands(ulong pointer)
         {
-            this.ItemInHands = this.GearManager.GearItems.FirstOrDefault(x => x.Pointer == pointer);
+            this.ItemInHands = this.GearManager.GearItems.Select(x => x).FirstOrDefault(x => x.Pointer == pointer);
         }
         private static readonly HashSet<string> 自闭头_IDS = new HashSet<string> { "5c091a4e0db834001d5addc8", "5c0e874186f7745dc7616606", "5d6d3716a4b9361bc8618872", "5aa7e4a4e5b5b000137b76f2", "5aa7e454e5b5b0214e506fa2", "5f60c74e3b85f6263c145586", "5aa7e276e5b5b000171d0647", "60a7ad3a0c5cb24b0134664a", "60a7ad2a2198820d95707a2e", "5ca20ee186f774799474abc2" };
 

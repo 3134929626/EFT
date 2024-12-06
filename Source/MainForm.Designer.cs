@@ -418,6 +418,7 @@
             colLootFilterItemName = new ColumnHeader();
             colLootFilterItemValue = new ColumnHeader();
             iconList = new ImageList(components);
+            成分查询 = new MaterialSkin.Controls.MaterialButton();
             tabControlMain.SuspendLayout();
             tabRadar.SuspendLayout();
             mcRadarLootItemViewer.SuspendLayout();
@@ -6598,6 +6599,7 @@
             // mcWatchlistProfiles
             // 
             mcWatchlistProfiles.BackColor = Color.FromArgb(255, 255, 255);
+            mcWatchlistProfiles.Controls.Add(成分查询);
             mcWatchlistProfiles.Controls.Add(lstWatchlistProfiles);
             mcWatchlistProfiles.Controls.Add(txtWatchlistProfileName);
             mcWatchlistProfiles.Controls.Add(lblWatchlistProfiles);
@@ -6946,6 +6948,29 @@
             iconList.Images.SetKeyName(2, "loadouts.png");
             iconList.Images.SetKeyName(3, "watchlist.png");
             iconList.Images.SetKeyName(4, "loot.png");
+            // 
+            // 成分查询
+            // 
+            成分查询.AutoSize = false;
+            成分查询.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            成分查询.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            成分查询.Depth = 0;
+            成分查询.Font = new Font("Segoe UI", 8F);
+            成分查询.HighEmphasis = true;
+            成分查询.Icon = null;
+            成分查询.Location = new Point(370, 152);
+            成分查询.Margin = new Padding(4, 7, 4, 7);
+            成分查询.MouseState = MaterialSkin.MouseState.HOVER;
+            成分查询.Name = "成分查询";
+            成分查询.NoAccentTextColor = Color.Empty;
+            成分查询.Size = new Size(81, 41);
+            成分查询.TabIndex = 50;
+            成分查询.Text = "查成分";
+            toolTip.SetToolTip(成分查询, "Manually triggers radar restart");
+            成分查询.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            成分查询.UseAccentColor = true;
+            成分查询.UseVisualStyleBackColor = true;
+            成分查询.Click += 成分查询_Click;
             // 
             // frmMain
             // 
@@ -7478,6 +7503,7 @@
         private MaterialSkin.Controls.MaterialSlider 当前延迟;
         private MaterialSkin.Controls.MaterialSlider 索敌距离;
         private MaterialSkin.Controls.MaterialLabel materialLabel3;
+        private MaterialSkin.Controls.MaterialButton 成分查询;
     }
 }
 

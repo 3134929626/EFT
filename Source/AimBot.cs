@@ -1280,10 +1280,10 @@ namespace eft_dma_radar
                         }
                         if (validTargets.Count > 0)
                         {
-                            // Multiple targets in FOV, prioritize the one closest to the player
+                            // FOV中有多个目标，优先考虑离玩家最近的目标
                             var closestPlayer = validTargets.Where(x => x.世界距离 < 80f);
 
-                            if (closestPlayer.Count() > 0)
+                            if (false && closestPlayer.Count() > 0)
                             {
                                 var 最近目标 = closestPlayer
                                     .OrderBy(x => x.屏幕距离)
