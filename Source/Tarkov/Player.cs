@@ -584,6 +584,13 @@ namespace eft_dma_radar
                             playerType = (dogtagSlot.Item.Short == "BEAR" ? PlayerType.BEAR : PlayerType.USEC);
                     }
 
+                    if (playerType == PlayerType.Scav)
+                    {
+                        if (!this.Name.Contains(" "))
+                        {
+                            return PlayerType.Raider;
+                        }
+                    }
                     return playerType;
                 }
             }
@@ -820,7 +827,7 @@ namespace eft_dma_radar
                 //boneIndex = (uint)PlayerBones.HumanNeck;
                 //pointer = Memory.ReadPtrChain(boneMatrix, [0x20 + (boneIndex * 0x8), 0x10]);
                 //this.BoneTransforms.Add(new Transform(pointer, false));
-                
+
                 this.BonePositions = new Vector3(0f, 0f, 0f);
 
                 //this.FirePointers = (Fire);

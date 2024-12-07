@@ -1933,7 +1933,7 @@ namespace eft_dma_radar
                 if (!aimviewPlayers.Any())
                     return;
 
-                if (aimviewPlayers is not null)
+                if (aimviewPlayers is not null && this.Loot?.Loot is not null)
                 {
                     var isItemListVisible = this.lstLootItems.Visible;
                     var localPlayerAimviewBoundsX = this.mcRadarLootItemViewer.Location.X;
@@ -2064,13 +2064,13 @@ namespace eft_dma_radar
                 return; // No status text to draw
             }
 
-            if (swAimview.Checked == true)
-            {
-                this.Invoke((MethodInvoker)delegate
-                {
-                    swAimview.Checked = false;
-                });
-            }
+            //if (swAimview.Checked == true)
+            //{
+            //    this.Invoke((MethodInvoker)delegate
+            //    {
+            //        swAimview.Checked = false;
+            //    });
+            //}
 
             var centerX = this.mapCanvas.Width / 2;
             var centerY = this.mapCanvas.Height / 2;
@@ -2785,7 +2785,7 @@ namespace eft_dma_radar
                 {
                     上侧键 = keyboard.IsKeyDown(0x06);
                     F6 = keyboard.IsKeyDown(0x75);
-                    F5 = keyboard.IsKeyDown(0x74);
+                    //F5 = keyboard.IsKeyDown(0x74);
                     F4 = keyboard.IsKeyDown(0x73);
                 }
                 if (F6)
@@ -2797,15 +2797,15 @@ namespace eft_dma_radar
                     });
                     Thread.Sleep(300);
                 }
-                if (F5)
-                {
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        var 状态 = swAimview.Checked;
-                        swAimview.Checked = !状态;
-                    });
-                    Thread.Sleep(300);
-                }
+                //if (F5)
+                //{
+                //    this.Invoke((MethodInvoker)delegate
+                //    {
+                //        var 状态 = swAimview.Checked;
+                //        swAimview.Checked = !状态;
+                //    });
+                //    Thread.Sleep(300);
+                //}
                 if (F4)
                 {
                     this.Invoke((MethodInvoker)delegate
